@@ -1,11 +1,22 @@
 import "./App.css";
+import Button from "./components/Button/Button";
+import { HeaderOne } from "./components/Header/Header";
+import { useState } from "react";
+import { employeeData } from "./data";
+import Container from "./components/Container/Container";
+import Employee from "./components/Employee/Employee";
 
-function App() {
+const App = () => {
+  const [employeesData, setEmployeesData] = useState([]);
+
   return (
     <div className='App'>
-      <h1>Welcome to the Employee App!!</h1>
+      <Employee
+        employeesData={employeesData}
+        setEmployeesData={setEmployeesData}
+      />
     </div>
   );
-}
+};
 
 export default App;
