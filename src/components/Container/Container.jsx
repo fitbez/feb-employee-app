@@ -1,28 +1,19 @@
 import React from "react";
 import "./Container.css";
+import { styled } from "styled-components";
 
-function Container(props) {
-  return (
-    <div
-      style={{
-        maxWidth: "1200px",
-        backgroundColor: "#f4f4f4",
-        height: "100vh",
-        margin: "0 auto",
-        display: "flex",
-      }}
-      className='container'
-    >
-      {props.childern}
-    </div>
-  );
+const StyledContainer = styled.div`
+  max-width: 1200px;
+  background-color: #f4f4f4;
+  margin: 0 auto;
+  display: flex;
+  height: 100vh;
+  padding: 4rem 2rem;
+  gap: 10px;
+`;
+
+function Container({ children }) {
+  return <StyledContainer>{children}</StyledContainer>;
 }
-
-// const StyledContainer = {
-//   maxWidth: "1200px",
-//   backgroundColor: "#f4f4f4",
-//   height: "100vh",
-//   margin: "0 auto",
-// };
 
 export default Container;

@@ -7,13 +7,13 @@ import Container from "../Container/Container";
 function Employee({ employeesData, setEmployeesData }) {
   return (
     <div className='employee-wrapper'>
-      {/* <Container> */}
-      <HomePage
-        employeesData={employeesData}
-        setEmployeesData={setEmployeesData}
-      />
-      {/* <EmployeeDetail /> */}
-      {/* </Container> */}
+      <Container>
+        <HomePage
+          employeesData={employeesData}
+          setEmployeesData={setEmployeesData}
+        />
+        <EmployeeDetail />
+      </Container>
     </div>
   );
 }

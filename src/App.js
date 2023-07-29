@@ -1,13 +1,22 @@
 import "./App.css";
-import Button from "./components/Button/Button";
-import { HeaderOne } from "./components/Header/Header";
-import { useState } from "react";
-import { employeeData } from "./data";
-import Container from "./components/Container/Container";
+import { useState, useEffect } from "react";
 import Employee from "./components/Employee/Employee";
 
 const App = () => {
   const [employeesData, setEmployeesData] = useState([]);
+
+  const requestUrl =
+    "https://calm-everglades-09552-105a0b4519dc.herokuapp.com/api/employee/employees";
+
+  const getEmployeesData = async () => {
+    const response = await fetch(requestUrl);
+    const data = await response.json();
+    setEmployeesData(data);
+  };
+
+  useEffect(() => {
+    getEmployeesData();
+  }, []);
 
   return (
     <div className='App'>
