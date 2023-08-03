@@ -26,14 +26,13 @@ const StyledContent = styled.div`
 `;
 
 function EmployeeListItem({ employeesData }) {
-  // console.log("employeesData from list item", employeesData);
   return (
     <div>
       <>
         {employeesData.length > 0
           ? employeesData.map((employee) => {
               return (
-                <StyledEmployeeListItem>
+                <StyledEmployeeListItem key={employee._id}>
                   <StyledImage src={employee.imageUrl} alt='' />
                   <StyledContent>
                     <h4>{employee.name}</h4>
