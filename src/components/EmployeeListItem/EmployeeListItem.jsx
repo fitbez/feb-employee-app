@@ -33,10 +33,10 @@ function EmployeeListItem({ employeesData }) {
           ? employeesData.map((employee) => {
               return (
                 <StyledEmployeeListItem key={employee._id}>
-                  <StyledImage src={employee.imageUrl} alt='' />
+                  <StyledImage src={employee.imageURl} alt='' />
                   <StyledContent>
                     <h4>{employee.name}</h4>
-                    <p>{employee.occupation}</p>
+                    <p>{employee.title}</p>
                   </StyledContent>
                 </StyledEmployeeListItem>
               );
