@@ -15,7 +15,10 @@ function Employee({ employeesData, setEmployeesData }) {
         />
         <EmployeeDetail />
       </Container>
-      <AddEmployee />
+      <AddEmployee
+        employeesData={employeesData}
+        setEmployeesData={setEmployeesData}
+      />
     </div>
   );
 }
