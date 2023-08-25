@@ -10,7 +10,7 @@ export const StyledFormContainer = styled.div`
 export const StyledForm = styled.form`
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 8px;
 `;
 
 export const StyledInputWrapper = styled.div`

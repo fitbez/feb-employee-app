@@ -1,32 +1,23 @@
 import "./App.css";
-import { useState, useEffect } from "react";
-import Employee from "./components/Employee/Employee";
-import { employeeData } from "./data";
-import AddEmployee from "./components/AddEmployee/AddEmployee";
+import Nav from "./components/Nav/Nav";
+import { Routes, Route } from "react-router-dom";
+import HomePage from "./components/Pages/HomePage";
+import AddEmployeePage from "./components/Pages/AddEmployeePage";
+import EmployeeListPage from "./components/Pages/EmployeeListPage";
+import { EmployeeProvider } from "./context";
 
 const App = () => {
-  const [employeesData, setEmployeesData] = useState(employeeData);
-
-  const requestUrl =
-    "https://calm-everglades-09552-105a0b4519dc.herokuapp.com/api/employee/employees";
-
-  // const getEmployeesData = async () => {
-  //   const response = await fetch(requestUrl);
-  //   const data = await response.json();
-  //   setEmployeesData(data);
-  // };
-
-  // useEffect(() => {
-  //   getEmployeesData();
-  // }, []);
-
   return (
-    <div className='App'>
-      <Employee
-        employeesData={employeesData}
-        setEmployeesData={setEmployeesData}
-      />
-    </div>
+    <>
+      <EmployeeProvider>
+        <Nav />
+        <Routes>
+          <Route path='/' element={<HomePage />} />
+          <Route path='/add-employee' element={<AddEmployeePage />} />
+          <Route path='/employee-list' element={<EmployeeListPage />} />
+        </Routes>
+      </EmployeeProvider>
+    </>
   );
 };
 

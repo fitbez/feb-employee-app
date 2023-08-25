@@ -8,10 +8,10 @@ const StyledEmployeeList = styled.div`
   gap: 5px;
 `;
 
-function EmployeeList({ employeesData }) {
+function EmployeeList() {
   return (
     <StyledEmployeeList>
-      <EmployeeListItem employeesData={employeesData} />
+      <EmployeeListItem />
     </StyledEmployeeList>
   );
 }

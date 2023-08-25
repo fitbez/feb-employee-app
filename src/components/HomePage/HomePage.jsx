@@ -11,17 +11,11 @@ const StyledHomePage = styled.div`
   padding: 2px 16px;
 `;
 
-function HomePage({ employeesData, setEmployeesData }) {
+function HomePage() {
   return (
     <StyledHomePage>
-      <SearchBar
-        employeesData={employeesData}
-        setEmployeesData={setEmployeesData}
-      />
-      <EmployeeList
-        employeesData={employeesData}
-        setEmployeesData={setEmployeesData}
-      />
+      <SearchBar />
+      <EmployeeList />
     </StyledHomePage>
   );
 }

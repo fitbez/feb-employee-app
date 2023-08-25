@@ -19,6 +19,8 @@ const AddEmployee = ({ employeesData, setEmployeesData }) => {
     email: "",
   });
 
+  const [errors, setErrors] = useState({});
+
   // collecting the user input
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -28,27 +30,56 @@ const AddEmployee = ({ employeesData, setEmployeesData }) => {
     }));
   };
 
+  //create a function that validates ....
+  // use conditional to check ...
+
+  const formValidate = () => {
+    let listErrors = {};
+    // name validation
+    if (formData.name.trim() === "") {
+      listErrors.name = "Name cannot be empty!"; // {name: "Name cannot be empty!"}
+    }
+
+    // email validation
+    if (formData.email.trim() === "") {
+      listErrors.email = "Email cannot be empty";
+    } else if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(formData.email)) {
+      listErrors.email = "Email is not valid";
+    }
+
+    console.log("validation", listErrors);
+    setErrors(listErrors);
+
+    return Object.keys(listErrors).length === 0; // boolean true/false
+  };
+
   // updating the formData state or handling the form submition
   const handleSubmit = (e) => {
     e.preventDefault();
-    setEmployeesData([...employeesData, formData]);
-    setFormData({
-      name: "",
-      title: "",
-      imageUrl: "",
-      callMobile: "",
-      callOffice: "",
-      sms: "",
-      email: "",
-    });
+    if (formValidate()) {
+      setEmployeesData([...employeesData, formData]);
+      setFormData({
+        name: "",
+        title: "",
+        imageUrl: "",
+        callMobile: "",
+        callOffice: "",
+        sms: "",
+        email: "",
+      });
+    }
   };
+
+  console.log("errors", errors);
 
   return (
     <StyledFormContainer>
       <h2>Add Employee</h2>
       <StyledForm action='' onSubmit={handleSubmit}>
         <StyledInputWrapper>
-          <StyledLabel htmlFor='name'>Name: </StyledLabel>
+          <StyledLabel htmlFor='name'>
+            Name <span style={{ color: "red" }}>*</span>:{" "}
+          </StyledLabel>
           <StyledInput
             name='name'
             onChange={handleChange}
@@ -56,6 +87,11 @@ const AddEmployee = ({ employeesData, setEmployeesData }) => {
             value={formData.name}
           />
         </StyledInputWrapper>
+        {errors.name && (
+          <p style={{ margin: 0, color: "red", lineHeight: 1 }}>
+            {errors.name}
+          </p>
+        )}
         <StyledInputWrapper>
           <StyledLabel htmlFor='title'>Title: </StyledLabel>
           <StyledInput
@@ -110,6 +146,17 @@ const AddEmployee = ({ employeesData, setEmployeesData }) => {
             onChange={handleChange}
           />
         </StyledInputWrapper>
+        {errors.email && (
+          <p
+            style={{
+              margin: 0,
+              color: "red",
+              lineHeight: 1,
+            }}
+          >
+            {errors.email}
+          </p>
+        )}
         {/* <StyledInputWrapper>
           <StyledButton>Add Employee</StyledButton>
         </StyledInputWrapper> */}

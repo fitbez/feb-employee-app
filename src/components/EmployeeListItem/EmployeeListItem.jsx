@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useContext } from "react";
 import { styled } from "styled-components";
+import { EmployeeContext } from "../../context";
 
 const StyledEmployeeListItem = styled.div`
   display: flex;
@@ -25,15 +26,26 @@ const StyledContent = styled.div`
   }
 `;
 
-function EmployeeListItem({ employeesData }) {
+function EmployeeListItem() {
+  const { employeesData, setEmployeeDetail } = useContext(EmployeeContext);
+  const handleEmployee = (id) => {
+    const employeeDetailInfo = employeesData.find(
+      (employee) => employee.id === id
+    );
+    // console.log("employee detail info", employeeDetailInfo);
+    setEmployeeDetail(employeeDetailInfo);
+  };
   return (
     <div>
       <>
         {employeesData.length > 0
           ? employeesData.map((employee) => {
               return (
-                <StyledEmployeeListItem key={employee._id}>
-                  <StyledImage src={employee.imageURl} alt='' />
+                <StyledEmployeeListItem
+                  onClick={() => handleEmployee(employee.id)}
+                  key={employee.id}
+                >
+                  <StyledImage src={employee.imageUrl} alt='' />
                   <StyledContent>
                     <h4>{employee.name}</h4>
                     <p>{employee.title}</p>
