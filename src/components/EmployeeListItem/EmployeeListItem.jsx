@@ -1,8 +1,9 @@
 import React, { useContext } from "react";
 import { styled } from "styled-components";
 import { EmployeeContext } from "../../context";
+import { Paper } from "@mui/material";
 
-const StyledEmployeeListItem = styled.div`
+const StyledEmployeeListItem = styled(Paper)`
   display: flex;
   margin-top: 5px;
   background-color: white;
@@ -42,6 +43,7 @@ function EmployeeListItem() {
           ? employeesData.map((employee) => {
               return (
                 <StyledEmployeeListItem
+                  elevation='4'
                   onClick={() => handleEmployee(employee.id)}
                   key={employee.id}
                 >

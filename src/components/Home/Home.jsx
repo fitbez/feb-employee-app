@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import { Button } from "@mui/material";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -14,8 +15,16 @@ const Home = () => {
         libero quasi accusamus. Voluptatum minima neque ut, commodi laboriosam
         fuga?
       </p>
-      <button onClick={handleLoginNavigate}>Log in</button>
-      <button>Sign up</button>
+      {/* <button onClick={handleLoginNavigate}>Log in</button>
+      <button>Sign up</button> */}
+      <Button
+        variant='contained'
+        sx={{ marginRight: "1rem" }}
+        onClick={handleLoginNavigate}
+      >
+        Log in
+      </Button>
+      <Button variant='outlined'>Sign up</Button>
     </div>
   );
 };
