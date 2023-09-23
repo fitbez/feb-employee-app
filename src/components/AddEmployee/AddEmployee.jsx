@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import {
   StyledFormContainer,
   StyledForm,
@@ -7,8 +7,14 @@ import {
   StyledInput,
   StyledButton,
 } from "./StyledComponents";
+import { EmployeeContext } from "../../context";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
-const AddEmployee = ({ employeesData, setEmployeesData }) => {
+const AddEmployee = () => {
+  const navigate = useNavigate();
+  const { employeesData, setEmployeesData, fetchEmployeesData, isLoading } =
+    useContext(EmployeeContext);
   const [formData, setFormData] = useState({
     name: "",
     title: "",
@@ -53,6 +59,22 @@ const AddEmployee = ({ employeesData, setEmployeesData }) => {
     return Object.keys(listErrors).length === 0; // boolean true/false
   };
 
+  const addEmployee = () => {
+    axios
+      .post("http://localhost:5000/api/employees/employee", formData)
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+    fetchEmployeesData();
+
+    if (!isLoading) {
+      navigate("/employee-list");
+    }
+  };
+
   // updating the formData state or handling the form submition
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -68,6 +90,7 @@ const AddEmployee = ({ employeesData, setEmployeesData }) => {
         email: "",
       });
     }
+    addEmployee();
   };
 
   console.log("errors", errors);

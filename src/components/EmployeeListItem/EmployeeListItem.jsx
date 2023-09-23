@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { styled } from "styled-components";
 import { EmployeeContext } from "../../context";
-import { Paper } from "@mui/material";
+import { Paper, Skeleton, Alert, AlertTitle } from "@mui/material";
 
 const StyledEmployeeListItem = styled(Paper)`
   display: flex;
@@ -10,6 +10,10 @@ const StyledEmployeeListItem = styled(Paper)`
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.25);
   align-items: center;
   padding: 5px 10px;
+`;
+
+const StyledSkeleton = styled(Skeleton)`
+  margin-bottom: 10px;
 `;
 
 const StyledImage = styled.img`
@@ -28,10 +32,11 @@ const StyledContent = styled.div`
 `;
 
 function EmployeeListItem() {
-  const { employeesData, setEmployeeDetail } = useContext(EmployeeContext);
+  const { employeesData, setEmployeeDetail, isLoading, isError } =
+    useContext(EmployeeContext);
   const handleEmployee = (id) => {
     const employeeDetailInfo = employeesData.find(
-      (employee) => employee.id === id
+      (employee) => employee._id === id
     );
     // console.log("employee detail info", employeeDetailInfo);
     setEmployeeDetail(employeeDetailInfo);
@@ -39,12 +44,27 @@ function EmployeeListItem() {
   return (
     <div>
       <>
+        {isLoading && (
+          <>
+            <StyledSkeleton variant='rounded' width={370} height={60} />
+            <StyledSkeleton variant='rounded' width={370} height={60} />
+            <StyledSkeleton variant='rounded' width={370} height={60} />
+            <StyledSkeleton variant='rounded' width={370} height={60} />
+          </>
+        )}
+
+        {isError && (
+          <Alert severity='error'>
+            <AlertTitle>Error</AlertTitle>
+            Something goes wrong — <strong>Please try agin later</strong>
+          </Alert>
+        )}
         {employeesData.length > 0
           ? employeesData.map((employee) => {
               return (
                 <StyledEmployeeListItem
                   elevation='4'
-                  onClick={() => handleEmployee(employee.id)}
+                  onClick={() => handleEmployee(employee._id)}
                   key={employee.id}
                 >
                   <StyledImage src={employee.imageUrl} alt='' />

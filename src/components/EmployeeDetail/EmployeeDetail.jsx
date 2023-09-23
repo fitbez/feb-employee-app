@@ -1,83 +1,80 @@
 import React, { useContext, useState } from "react";
 import { styled } from "styled-components";
 import { EmployeeContext } from "../../context";
+import {
+  Paper,
+  Box,
+  Avatar,
+  List,
+  ListItem,
+  Divider,
+  Typography,
+  Skeleton,
+} from "@mui/material";
+import { Header } from "../Header/Header";
 
-const StyledEmployeeDetail = styled.div`
-  height: 70%;
-  border: 1px solid brown;
-  width: 50%;
-
-  h3,
-  p {
-    padding: 0;
-    margin: 0;
-  }
-`;
-
-const StyledImage = styled.img`
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-`;
-
-const StyledEmployeeHeader = styled.div`
-  display: flex;
-  gap: 10px;
-  padding: 15px 10px;
-  align-items: center;
-  border-bottom: 1px solid #9e9e9e;
-`;
-
-const StyledEmployeeContactInfo = styled.div`
-  display: flex;
-  flex-direction: column;
-  padding: 10px;
-  border-bottom: 1px solid #9e9e9e;
-`;
-
-const StyledEmployeeDetailWrapper = styled.div`
-  margin: 2rem;
-  border: 1px solid #9e9e9e;
-  border-radius: 8px;
-`;
-
-const StyledEmployeeHeaderContactInfo = styled.div`
-  display: flex;
-  flex-direction: column;
-  padding: 10px;
-`;
+//Paper, Box, Avater, List, ListItem, Divider, Typography
 
 function EmployeeDetail() {
   const { employeeDetail, setEmployeeDetail } = useContext(EmployeeContext);
 
   return (
-    <StyledEmployeeDetail>
-      <StyledEmployeeDetailWrapper>
-        <StyledEmployeeHeader>
-          <StyledImage src={employeeDetail.imageUrl} alt='' />
-          <StyledEmployeeHeaderContactInfo>
-            <h3>{employeeDetail.name}</h3>
-            <p>{employeeDetail.title}</p>
-          </StyledEmployeeHeaderContactInfo>
-        </StyledEmployeeHeader>
-        <StyledEmployeeContactInfo>
-          <h3>Call Office</h3>
-          <p>{employeeDetail.callOffice}</p>
-        </StyledEmployeeContactInfo>
-        <StyledEmployeeContactInfo>
-          <h3>Call Mobile</h3>
-          <p>{employeeDetail.callMobile}</p>
-        </StyledEmployeeContactInfo>
-        <StyledEmployeeContactInfo>
-          <h3>SMS</h3>
-          <p>{employeeDetail.sms}</p>
-        </StyledEmployeeContactInfo>
-        <StyledEmployeeContactInfo>
-          <h3>Email</h3>
-          <p>{employeeDetail.email}</p>
-        </StyledEmployeeContactInfo>
-      </StyledEmployeeDetailWrapper>
-    </StyledEmployeeDetail>
+    <Paper sx={{ width: "50%", padding: "0rem 2rem" }}>
+      <Header name='Employee' />
+      <Paper elevation='0' sx={{ width: "100%", border: "1px solid #f4f4f4" }}>
+        <Box sx={{ display: "flex", padding: "1rem" }}>
+          <Avatar
+            sx={{ width: 80, height: 80 }}
+            alt=''
+            src={employeeDetail.imageUrl}
+          />
+          <List>
+            <ListItem sx={{ paddingTop: "0rem", paddingBottom: "0rem" }}>
+              <Typography variant='h6'>{employeeDetail.name}</Typography>
+            </ListItem>
+            <ListItem sx={{ paddingTop: "0rem", paddingBottom: "0rem" }}>
+              <Typography variant='body1'>{employeeDetail.title}</Typography>
+            </ListItem>
+          </List>
+        </Box>
+        <Divider />
+        <List>
+          <ListItem sx={{ paddingTop: "0rem", paddingBottom: "0rem" }}>
+            <Typography variant='h6'>Call Office:</Typography>
+          </ListItem>
+          <ListItem sx={{ paddingTop: "0rem", paddingBottom: "0rem" }}>
+            <Typography variant='body1'>{employeeDetail.callOffice}</Typography>
+          </ListItem>
+        </List>
+        <Divider />
+        <List>
+          <ListItem sx={{ paddingTop: "0rem", paddingBottom: "0rem" }}>
+            <Typography variant='h6'>Call Mobile:</Typography>
+          </ListItem>
+          <ListItem sx={{ paddingTop: "0rem", paddingBottom: "0rem" }}>
+            <Typography variant='body1'>{employeeDetail.callMobile}</Typography>
+          </ListItem>
+        </List>
+        <Divider />
+        <List>
+          <ListItem sx={{ paddingTop: "0rem", paddingBottom: "0rem" }}>
+            <Typography variant='h6'>Sms:</Typography>
+          </ListItem>
+          <ListItem sx={{ paddingTop: "0rem", paddingBottom: "0rem" }}>
+            <Typography variant='body1'>{employeeDetail.sms}</Typography>
+          </ListItem>
+        </List>
+        <Divider />
+        <List>
+          <ListItem sx={{ paddingTop: "0rem", paddingBottom: "0rem" }}>
+            <Typography variant='h6'>Email:</Typography>
+          </ListItem>
+          <ListItem sx={{ paddingTop: "0rem", paddingBottom: "0rem" }}>
+            <Typography variant='body1'>{employeeDetail.email}</Typography>
+          </ListItem>
+        </List>
+      </Paper>
+    </Paper>
   );
 }
 

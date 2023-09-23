@@ -8,7 +8,7 @@ const StyledContainer = styled.div`
   margin: 0 auto;
   display: flex;
   height: 100vh;
-  padding: 4rem 2rem;
+  padding: 6rem 2rem;
   gap: 10px;
 `;
 
