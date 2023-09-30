@@ -18,14 +18,50 @@ const AddEmployee = () => {
   const [formData, setFormData] = useState({
     name: "",
     title: "",
-    imageUrl: "",
     callMobile: "",
     callOffice: "",
     sms: "",
     email: "",
   });
 
+  const [imageFile, setImageFile] = useState(null);
+  const [imageUrl, setImageUrl] = useState("");
   const [errors, setErrors] = useState({});
+  const [isImageUploadLoading, setIsImageUploadLoading] = useState(true);
+  const [isImageUploadError, setIsImageUploadError] = useState(false);
+
+  const handleImageFile = (e) => {
+    setImageFile(e.target.files[0]);
+  };
+
+  const uploadImage = async () => {
+    if (!imageFile) return;
+
+    const formData = new FormData();
+    formData.append("fileUpload", imageFile);
+
+    try {
+      const response = await axios.post(
+        "http://localhost:5000/upload",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
+      // Update the imageUrl state with the received URL
+      setImageUrl(response.data.imageUrl);
+      setIsImageUploadLoading(false);
+    } catch (error) {
+      console.error("Image upload error:", error);
+      setIsImageUploadLoading(false);
+      setIsImageUploadError(true);
+    }
+  };
+
+  console.log("image url", imageUrl);
 
   // collecting the user input
   const handleChange = (e) => {
@@ -59,9 +95,10 @@ const AddEmployee = () => {
     return Object.keys(listErrors).length === 0; // boolean true/false
   };
 
-  const addEmployee = () => {
+  const addEmployee = (employeeInfo) => {
+    console.log("employee data with image", employeeInfo);
     axios
-      .post("http://localhost:5000/api/employees/employee", formData)
+      .post("http://localhost:5000/api/employees/employee", employeeInfo)
       .then(function (response) {
         console.log(response);
       })
@@ -70,27 +107,35 @@ const AddEmployee = () => {
       });
     fetchEmployeesData();
 
-    if (!isLoading) {
+    if (!isLoading && !isImageUploadError && !isImageUploadLoading) {
       navigate("/employee-list");
     }
   };
 
   // updating the formData state or handling the form submition
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (formValidate()) {
-      setEmployeesData([...employeesData, formData]);
+    // Upload the image first
+    await uploadImage();
+
+    if (formValidate() && imageUrl) {
+      const employeeDataWithImage = {
+        ...formData, //title, name, imageUrl
+        imageUrl,
+      };
+
+      addEmployee(employeeDataWithImage);
+
       setFormData({
         name: "",
         title: "",
-        imageUrl: "",
         callMobile: "",
         callOffice: "",
         sms: "",
         email: "",
       });
     }
-    addEmployee();
+    console.log("image url", imageUrl);
   };
 
   console.log("errors", errors);
@@ -99,6 +144,7 @@ const AddEmployee = () => {
     <StyledFormContainer>
       <h2>Add Employee</h2>
       <StyledForm action='' onSubmit={handleSubmit}>
+        <input type='file' onChange={handleImageFile} />
         <StyledInputWrapper>
           <StyledLabel htmlFor='name'>
             Name <span style={{ color: "red" }}>*</span>:{" "}
@@ -130,15 +176,6 @@ const AddEmployee = () => {
             name='callMobile'
             type='text'
             value={formData.callMobile}
-            onChange={handleChange}
-          />
-        </StyledInputWrapper>
-        <StyledInputWrapper>
-          <StyledLabel htmlFor='imageUrl'>imageUrl: </StyledLabel>
-          <StyledInput
-            name='imageUrl'
-            type='text'
-            value={formData.imageUrl}
             onChange={handleChange}
           />
         </StyledInputWrapper>
@@ -183,9 +220,9 @@ const AddEmployee = () => {
         {/* <StyledInputWrapper>
           <StyledButton>Add Employee</StyledButton>
         </StyledInputWrapper> */}
-        <div>
+        <>
           <StyledButton>Add Employee</StyledButton>
-        </div>
+        </>
       </StyledForm>
     </StyledFormContainer>
   );
