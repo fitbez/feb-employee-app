@@ -24,7 +24,9 @@ const Home = () => {
       >
         Log in
       </Button>
-      <Button variant='outlined'>Sign up</Button>
+      <Button variant='outlined' onClick={() => navigate("/register")}>
+        Sign up
+      </Button>
     </div>
   );
 };

@@ -10,6 +10,7 @@ export const EmployeeProvider = (props) => {
   const [employeeDetail, setEmployeeDetail] = useState({});
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const name = "Fitsum";
 
@@ -49,6 +50,8 @@ export const EmployeeProvider = (props) => {
         isLoading,
         isError,
         fetchEmployeesData,
+        isLoggedIn,
+        setIsLoggedIn,
       }}
     >
       {props.children}

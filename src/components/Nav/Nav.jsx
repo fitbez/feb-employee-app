@@ -66,24 +66,49 @@ import {
   Button,
   Drawer,
 } from "@mui/material";
+import { EmployeeContext } from "../../context";
 
 import { useNavigate } from "react-router-dom";
 
 const drawerWidth = 240;
-const navItems = [
-  { item: "Home", path: "/" },
+const authNavItems = [
   { item: "Employee List", path: "/employee-list" },
   { item: "Add Employee", path: "/add-employee" },
-  { item: "Log out", path: "/" },
+  { item: "Log out", path: "/", isLogout: true },
 ];
 
+const unauthNavItems = [{ item: "Home", path: "/" }];
+
 function DrawerAppBar(props) {
+  const { isLoggedIn, setIsLoggedIn } = React.useContext(EmployeeContext);
+
+  const navItems = isLoggedIn ? authNavItems : unauthNavItems;
+
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const navigate = useNavigate();
 
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState);
+  };
+
+  const handleNavItemClick = (path, isLogout) => {
+    console.log("is logged in", isLoggedIn);
+
+    if (isLogout) {
+      // Optional: API call to backend to handle server-side logout
+      // await api.logout();
+
+      // Remove token or session ID
+      document.cookie =
+        "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+
+      // Update login state
+      setIsLoggedIn(false);
+    }
+
+    // Redirect or navigate user
+    navigate(path);
   };
 
   const drawer = (
@@ -100,7 +125,10 @@ function DrawerAppBar(props) {
         {navItems.map((navItem) => (
           <ListItem key={navItem.item} disablePadding>
             <ListItemButton
-              onClick={() => navigate(navItem.path)}
+              onClick={() => {
+                console.log("Direct click handler");
+                handleNavItemClick(navItem.path, navItem.isLogout);
+              }}
               sx={{ textAlign: "center" }}
             >
               <ListItemText primary={navItem.item} />
@@ -142,7 +170,10 @@ function DrawerAppBar(props) {
           <Box sx={{ display: { xs: "none", sm: "block" } }}>
             {navItems.map((navItem) => (
               <Button
-                onClick={() => navigate(navItem.path)}
+                onClick={() => {
+                  console.log("Direct click handler");
+                  handleNavItemClick(navItem.path, navItem.isLogout);
+                }}
                 key={navItem.item}
                 sx={{ color: "#fff" }}
               >
